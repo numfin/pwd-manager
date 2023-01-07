@@ -1,0 +1,49 @@
+@host=http://localhost:3000
+
+{{
+  const token = "test"
+  exports.defaultHeaders = {
+    'Content-Type': 'application/json',
+  };
+}}
+###
+
+# @name search records
+GET /password?search=
+###
+# @name get password
+POST /password/clcj1rvj90000153gvez063yr
+...defaultHeaders
+{
+    "key": "qweqweqwe"
+}
+###
+# @name create password
+POST /password
+...defaultHeaders
+{
+    "title": "I dont like to share this with anyone",
+    "key": "qweqweqwe",
+    "login": "pussy@gmail.com",
+    "password": "what is dis",
+    "resources": [
+        "pornhub.com"
+    ]
+}
+###
+# @name create password2
+POST /password
+...defaultHeaders
+{
+    "title": "I dont like to share this with anyone",
+    "key": "qweqweqwe",
+    "login": "pussy@gmail.com",
+    "password": "what is dis",
+    "resources": [
+        "pornhub.com"
+    ]
+}
+###
+# @name delete password
+DELETE /password/clcj1yhu7000015jwdwsj9nnt
+###

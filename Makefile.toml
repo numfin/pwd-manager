@@ -1,0 +1,15 @@
+[config]
+skip_core_tasks = true
+
+[tasks.server]
+workspace = false
+command = "cargo"
+args = ["run", "--bin", "server"]
+watch = { watch = ["server", "essentials"] }
+
+[tasks.gui]
+workspace = false
+command = "cargo"
+args = ["run", "--bin", "gui"]
+watch = { watch = ["gui", "essentials"] }
+env_files = ["./env"]

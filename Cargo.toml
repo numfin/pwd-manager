@@ -1,0 +1,2 @@
+[workspace]
+members = ["essentials", "server", "gui", "app"]
