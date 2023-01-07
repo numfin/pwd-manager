@@ -1,7 +1,9 @@
 Self hosted password manager via Rust + Egui
 
-To start dev server (dont forget to set .env): `cargo make server`
+> Dont forget to set .env
+
+To start dev server: `cargo make server`
 
 To start dev gui: `cargo make gui`
 
-To start both: `cargo run --release --bin app`
+To start both: `cargo make app`
