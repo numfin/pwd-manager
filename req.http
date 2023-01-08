@@ -12,7 +12,7 @@
 GET /password?search=
 ###
 # @name get password
-POST /password/clcj1rvj90000153gvez063yr
+POST /password/clcniqsyx000015h49s5x39bg
 ...defaultHeaders
 {
     "key": "qweqweqwe"
@@ -27,20 +27,24 @@ POST /password
     "login": "pussy@gmail.com",
     "password": "what is dis",
     "resources": [
-        "pornhub.com"
+        {
+            "URL": "pornhub.com"
+        }
     ]
 }
 ###
-# @name create password2
-POST /password
+# @name update password2
+PUT /password/clcniqsyx000015h49s5x39bg
 ...defaultHeaders
 {
-    "title": "I dont like to share this with anyone",
+    "title": "Changed",
     "key": "qweqweqwe",
-    "login": "pussy@gmail.com",
-    "password": "what is dis",
+    "login": "wow@gmail.com",
+    "password": "yyy",
     "resources": [
-        "pornhub.com"
+        {
+            "URL": "kek.com"
+        }
     ]
 }
 ###
