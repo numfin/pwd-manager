@@ -19,16 +19,16 @@ use server::password::list_passwords::{self, PublicRecord};
 
 pub struct PasswordList;
 impl PasswordList {
-    async fn load_passwords(url: &str, query: String) -> Result<Vec<PublicRecord>> {
+    pub async fn load_passwords(url: &str, query: String) -> Result<Vec<PublicRecord>> {
         let url = url.to_string();
         let query = query.to_string();
-        tokio::time::sleep(Duration::from_secs_f32(0.2)).await;
         let client = reqwest::Client::new();
         let response = client
             .get(url)
             .query(&[("search", query)])
             .send()
             .await?
+            .error_for_status()?
             .json::<list_passwords::ListPasswordsResponse>()
             .await?;
 
@@ -39,9 +39,10 @@ impl AppComponent for PasswordList {
     type State = AppState;
 
     fn add(state: &mut Self::State, ui: &mut egui::Ui) {
-        let loader = LazyLoader::load(state.store.vault.password_records.clone(), async {
+        let loader = LazyLoader::load_sync(state.store.vault.password_records.clone(), async {
             let response = reqwest::get("http://localhost:3000/password?search=")
                 .await?
+                .error_for_status()?
                 .json::<list_passwords::ListPasswordsResponse>()
                 .await?;
 
@@ -104,6 +105,8 @@ impl AppComponent for PasswordList {
                     }
                     _ => {
                         ui.spinner();
+                        ui.ctx()
+                            .request_repaint_after(Duration::from_secs_f32(0.05));
                     }
                 }
             });

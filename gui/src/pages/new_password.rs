@@ -71,6 +71,7 @@ impl AppComponent for NewPassword {
                             &record_id,
                         );
                         state.store.vault.password_records.lock().cancel();
+                        state.store.forms.new_record_save.cancel();
                         state.page = Page::Main;
                     }
                     LazyValue::Error(err) => {
@@ -110,6 +111,7 @@ pub fn save_password(
             .json(&payload)
             .send()
             .await?
+            .error_for_status()?
             .text()
             .await?;
         Ok(record_id)

@@ -1,4 +1,5 @@
 use essentials::password::ResourceDefinition;
+use server::password::get_password::PrivateRecord;
 
 use crate::tools::lazy_loader::LazyLoader;
 
@@ -6,6 +7,23 @@ use crate::tools::lazy_loader::LazyLoader;
 pub struct StoreForms {
     pub new_record: NewRecordForm,
     pub new_record_save: LazyLoader<String>,
+    pub edit_record: LazyLoader<EditRecordForm>,
+    pub edit_record_save: LazyLoader<String>,
+}
+
+pub struct EditRecordForm {
+    pub record: PrivateRecord,
+}
+impl EditRecordForm {
+    pub fn new(record: PrivateRecord) -> Self {
+        Self { record }
+    }
+
+    pub fn new_resource(&mut self) {
+        self.record
+            .resources
+            .push(ResourceDefinition::URL("".to_string()));
+    }
 }
 
 pub struct NewRecordForm {

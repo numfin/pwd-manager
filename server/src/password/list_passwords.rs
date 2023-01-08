@@ -1,4 +1,4 @@
-use std::sync::Arc;
+use std::{sync::Arc, time::Instant};
 
 use axum::{
     extract::{Query, State},
@@ -29,6 +29,7 @@ pub async fn route(
     State(state): State<Arc<AppState>>,
     Query(payload): Query<ListPasswordsPayload>,
 ) -> AppResult<Json<ListPasswordsResponse>> {
+    let time = Instant::now();
     let index = state.meili.index(AppIndex::PasswordRecords);
     let records = index
         .search()
@@ -53,5 +54,7 @@ pub async fn route(
         .collect();
 
     let body = ListPasswordsResponse { records };
+
+    println!("Retrieved records in: {:#?}", time.elapsed());
     Ok(Json(body))
 }

@@ -43,6 +43,7 @@ pub fn set_active_record(
             .json(&req_body)
             .send()
             .await?
+            .error_for_status()?
             .json::<get_password::PrivateRecord>()
             .await?;
         Ok(private_record)

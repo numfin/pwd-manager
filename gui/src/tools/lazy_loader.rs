@@ -37,7 +37,7 @@ impl<T: Send + 'static> LazyLoader<T> {
     ///     LazyValue::Loaded(data) => /* ... */,
     ///     LazyValue::Error(err) => /* ... */,
     /// }
-    pub fn load<F: std::future::Future<Output = eyre::Result<T>> + 'static + Send>(
+    pub fn load_sync<F: std::future::Future<Output = eyre::Result<T>> + 'static + Send>(
         loader_state: Arc<Mutex<LazyLoader<T>>>,
         loader: F,
     ) -> Arc<Mutex<Self>> {
@@ -52,6 +52,22 @@ impl<T: Send + 'static> LazyLoader<T> {
             })
         };
         loader_state
+    }
+    pub fn load<F: std::future::Future<Output = eyre::Result<T>> + 'static + Send>(
+        &mut self,
+        loader: F,
+    ) -> &mut Self {
+        let _ = {
+            self.promise.get_or_insert_with(|| {
+                Promise::spawn_async(async {
+                    match loader.await {
+                        Ok(data) => LazyValue::Loaded(data),
+                        Err(err) => LazyValue::Error(err),
+                    }
+                })
+            })
+        };
+        self
     }
     /// Use this to cancel previous promise and replace it with new one
     ///
@@ -73,6 +89,18 @@ impl<T: Send + 'static> LazyLoader<T> {
         };
         self
     }
+    pub fn extract_data(&mut self) -> Option<&mut T> {
+        self.promise
+            .as_mut()
+            .and_then(|promise| match promise.ready_mut() {
+                Some(lazy_value) => Some(lazy_value),
+                _ => None,
+            })
+            .and_then(|lazy_value| match lazy_value {
+                LazyValue::Loaded(data) => Some(data),
+                _ => None,
+            })
+    }
     pub fn cancel(&mut self) -> &mut Self {
         let promise = self.promise.take();
         if let Some(promise) = promise {
@@ -87,6 +115,12 @@ impl<T: Send + 'static> LazyLoader<T> {
                 None => &LazyValue::Loading,
             },
             None => &LazyValue::Unset,
+        }
+    }
+    pub fn is_loading(&self) -> bool {
+        match self.check() {
+            LazyValue::Loading => true,
+            _ => false,
         }
     }
 }
