@@ -868,19 +868,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "ehttp"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "80b69a6f9168b96c0ae04763bec27a8b06b34343c334dd2703a4ec21f0f5e110"
-dependencies = [
- "js-sys",
- "ureq",
- "wasm-bindgen",
- "wasm-bindgen-futures",
- "web-sys",
-]
-
-[[package]]
 name = "either"
 version = "1.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -962,10 +949,8 @@ dependencies = [
  "cbc",
  "cuid",
  "eyre",
- "futures",
  "rand",
  "serde",
- "serde_json",
  "sha2",
 ]
 
@@ -1320,13 +1305,11 @@ name = "gui"
 version = "0.1.0"
 dependencies = [
  "eframe",
- "ehttp",
  "essentials",
  "eyre",
  "parking_lot",
  "poll-promise",
  "reqwest",
- "serde_json",
  "server",
  "tokio",
  "tracing-subscriber",
@@ -2596,7 +2579,6 @@ dependencies = [
  "axum",
  "essentials",
  "eyre",
- "futures",
  "meilisearch-sdk",
  "serde",
  "serde_json",
@@ -3130,22 +3112,6 @@ name = "untrusted"
 version = "0.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a156c684c91ea7d62626509bce3cb4e1d9ed5c4d978f7b4352658f96a4c26b4a"
-
-[[package]]
-name = "ureq"
-version = "2.6.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "733b5ad78377302af52c0dbcb2623d78fe50e4b3bf215948ff29e9ee031d8566"
-dependencies = [
- "base64",
- "flate2",
- "log",
- "once_cell",
- "rustls",
- "url",
- "webpki",
- "webpki-roots",
-]
 
 [[package]]
 name = "url"
