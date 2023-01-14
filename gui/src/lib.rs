@@ -1,7 +1,5 @@
 use std::ops::Div;
 
-use app::App;
-
 mod app;
 mod components;
 mod egui_app;
@@ -31,6 +29,6 @@ pub async fn run() {
     eframe::run_native(
         "My egui App",
         options,
-        Box::new(|_cc| Box::new(App::default())),
+        Box::new(|_cc| Box::<app::App>::default()),
     )
 }

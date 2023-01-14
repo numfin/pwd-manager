@@ -16,13 +16,6 @@ pub struct Meili {
     pub client: Client,
 }
 impl Meili {
-    pub fn new() -> Self {
-        let client = Client::new(
-            std::env::var("MEILI_HOST").expect("MEILI_HOST env"),
-            std::env::var("MEILI_KEY").expect("MEILI_KEY env"),
-        );
-        Self { client }
-    }
     pub fn index(&self, index: AppIndex) -> Index {
         self.client.index(index.to_string())
     }
@@ -32,5 +25,15 @@ impl Meili {
             .set_sortable_attributes(&["title"])
             .await?;
         Ok(())
+    }
+}
+
+impl Default for Meili {
+    fn default() -> Self {
+        let client = Client::new(
+            std::env::var("MEILI_HOST").expect("MEILI_HOST env"),
+            std::env::var("MEILI_KEY").expect("MEILI_KEY env"),
+        );
+        Self { client }
     }
 }

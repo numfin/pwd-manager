@@ -12,7 +12,7 @@ use crate::{
     tools::lazy_loader::{LazyLoader, LazyValue},
 };
 
-use super::{button_action, copy_text::copy_text, left_panel::PasswordList, AppComponent};
+use super::{copy_text::copy_text, AppComponent};
 
 pub struct RecordView;
 impl AppComponent for RecordView {
@@ -126,7 +126,7 @@ impl AppComponent for RecordView {
                     .num_columns(2)
                     .spacing([0., 10.])
                     .show(ui, |ui| {
-                        loaded_record_view(ui, &data, &mut state.store.vault.visible_fields);
+                        loaded_record_view(ui, data, &mut state.store.vault.visible_fields);
                     });
             }
             LazyValue::Error(err) => {

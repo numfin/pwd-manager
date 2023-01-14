@@ -68,7 +68,7 @@ impl AppComponent for NewPassword {
                             state.store.vault.active_record.clone(),
                             &state.store.settings.server,
                             &state.store.settings.key,
-                            &record_id,
+                            record_id,
                         );
                         state.store.vault.password_records.lock().cancel();
                         state.store.forms.new_record_save.cancel();

@@ -1,19 +1,14 @@
 use eframe::egui::ScrollArea;
 use essentials::password::ResourceDefinition;
-use server::password::{
-    edit_password::EditPasswordPayload, get_password, new_password::NewPasswordPayload,
-};
+use server::password::{edit_password::EditPasswordPayload, get_password};
 
 use crate::{
     app::AppState,
     components::{
         button_action::button_action, input_with_label::input_with_label,
-        record_list_item::set_active_record, AppComponent, AppComponentWithProps,
+        record_list_item::set_active_record, AppComponentWithProps,
     },
-    store::{
-        forms::{EditRecordForm, NewRecordForm},
-        settings::StoreSettings,
-    },
+    store::{forms::EditRecordForm, settings::StoreSettings},
     tools::lazy_loader::{LazyLoader, LazyValue},
 };
 
@@ -108,7 +103,7 @@ impl AppComponentWithProps for EditPassword {
                                 state.store.vault.active_record.clone(),
                                 &state.store.settings.server,
                                 &state.store.settings.key,
-                                &record_id,
+                                record_id,
                             );
                             state.store.vault.password_records.lock().cancel();
                             state.page = Page::Main;

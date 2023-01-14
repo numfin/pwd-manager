@@ -92,10 +92,7 @@ impl<T: Send + 'static> LazyLoader<T> {
     pub fn extract_data(&mut self) -> Option<&mut T> {
         self.promise
             .as_mut()
-            .and_then(|promise| match promise.ready_mut() {
-                Some(lazy_value) => Some(lazy_value),
-                _ => None,
-            })
+            .and_then(|promise| promise.ready_mut())
             .and_then(|lazy_value| match lazy_value {
                 LazyValue::Loaded(data) => Some(data),
                 _ => None,
@@ -118,9 +115,6 @@ impl<T: Send + 'static> LazyLoader<T> {
         }
     }
     pub fn is_loading(&self) -> bool {
-        match self.check() {
-            LazyValue::Loading => true,
-            _ => false,
-        }
+        matches!(self.check(), LazyValue::Loading)
     }
 }

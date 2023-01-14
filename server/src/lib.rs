@@ -11,7 +11,7 @@ pub struct AppState {
     pub meili: Meili,
 }
 pub async fn run() -> eyre::Result<()> {
-    let meili = Meili::new();
+    let meili = Meili::default();
     meili.prepare().await?;
     let shared_state = Arc::new(AppState { meili });
 
